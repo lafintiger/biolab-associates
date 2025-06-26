@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - BioLab Associates{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-shopping-cart me-2"></i>Shopping Cart</h2>
+
+{% if cart_items %}
+<div class="row">
+    <div class="col-lg-8">
+        {% for item in cart_items %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                        <i class="fas fa-microscope fa-2x text-muted"></i>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">{{ item.product.name }}</h5>
+                                <p class="card-text">{{ item.product.description }}</p>
+                                <p class="card-text"><small class="text-muted">{{ item.product.specifications }}</small></p>
+                            </div>
+                            <div class="text-end">
+                                <p class="mb-1"><strong>Unit Price: ${{ "%.2f"|format(item.product.price) }}</strong></p>
+                                <p class="mb-1">Quantity: <span class="badge bg-primary">{{ item.quantity }}</span></p>
+                                <p class="mb-0"><strong>Subtotal: ${{ "%.2f"|format(item.item_total) }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Order Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Items ({{ cart_items|length }}):</span>
+                    <span>${{ "%.2f"|format(total) }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping:</span>
+                    <span class="text-success">FREE</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Total:</strong>
+                    <strong class="text-primary">${{ "%.2f"|format(total) }}</strong>
+                </div>
+                
+                <form method="POST" action="{{ url_for('checkout') }}">
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                    </button>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('catalog') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6><i class="fas fa-shield-alt me-2"></i>Secure Checkout</h6>
+                <p class="small mb-0">Your payment information is processed securely using industry-standard encryption.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-shopping-cart fa-5x text-muted mb-3"></i>
+    <h3>Your cart is empty</h3>
+    <p class="text-muted">Browse our catalog to add products to your cart.</p>
+    <a href="{{ url_for('catalog') }}" class="btn btn-primary">
+        <i class="fas fa-list me-2"></i>Browse Catalog
+    </a>
+</div>
+{% endif %}
+{% endblock %} 

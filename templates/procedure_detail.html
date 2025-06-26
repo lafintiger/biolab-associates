@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}{{ procedure_name.replace('_', ' ').title() }} - Lab Procedures{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('lab_procedures') }}">Lab Procedures</a></li>
+        <li class="breadcrumb-item active">{{ procedure_name.replace('_', ' ').title() }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-flask me-2"></i>{{ procedure_name.replace('_', ' ').title() }}</h2>
+            </div>
+            <div class="card-body">
+                {% if procedure_name == 'cell_culture_basics' %}
+                <h4>Cell Culture Basics</h4>
+                <p><strong>Objective:</strong> Establish and maintain sterile cell cultures</p>
+                <h5>Materials Required:</h5>
+                <ul>
+                    <li>Sterile cell culture flasks</li>
+                    <li>Complete culture medium</li>
+                    <li>Sterile pipettes</li>
+                    <li>Class II biosafety cabinet</li>
+                    <li>CO2 incubator</li>
+                </ul>
+                <h5>Procedure:</h5>
+                <ol>
+                    <li>Work in a sterile biosafety cabinet</li>
+                    <li>Pre-warm culture medium to 37°C</li>
+                    <li>Add medium to sterile culture flask</li>
+                    <li>Inoculate with cell suspension</li>
+                    <li>Incubate at 37°C with 5% CO2</li>
+                    <li>Monitor daily for contamination</li>
+                </ol>
+                
+                {% elif procedure_name == 'dna_extraction' %}
+                <h4>DNA Extraction Protocol</h4>
+                <p><strong>Objective:</strong> Extract high-quality genomic DNA from biological samples</p>
+                <h5>Materials Required:</h5>
+                <ul>
+                    <li>Lysis buffer</li>
+                    <li>Proteinase K</li>
+                    <li>Ethanol (70% and 100%)</li>
+                    <li>Microcentrifuge tubes</li>
+                    <li>Automated DNA extractor (optional)</li>
+                </ul>
+                <h5>Procedure:</h5>
+                <ol>
+                    <li>Prepare biological sample</li>
+                    <li>Add lysis buffer and proteinase K</li>
+                    <li>Incubate at 56°C for 1 hour</li>
+                    <li>Add binding buffer and mix</li>
+                    <li>Transfer to spin column</li>
+                    <li>Wash with wash buffers</li>
+                    <li>Elute DNA with elution buffer</li>
+                </ol>
+                
+                {% elif procedure_name == 'pcr_setup' %}
+                <h4>PCR Setup Protocol</h4>
+                <p><strong>Objective:</strong> Amplify specific DNA sequences using PCR</p>
+                <h5>Materials Required:</h5>
+                <ul>
+                    <li>PCR master mix</li>
+                    <li>Forward and reverse primers</li>
+                    <li>Template DNA</li>
+                    <li>PCR tubes</li>
+                    <li>Thermal cycler</li>
+                </ul>
+                <h5>Procedure:</h5>
+                <ol>
+                    <li>Calculate reaction volumes</li>
+                    <li>Prepare master mix</li>
+                    <li>Add primers and template DNA</li>
+                    <li>Load into thermal cycler</li>
+                    <li>Run PCR program</li>
+                    <li>Verify results by gel electrophoresis</li>
+                </ol>
+                
+                {% elif procedure_name == 'autoclave_operation' %}
+                <h4>Autoclave Operation</h4>
+                <p><strong>Objective:</strong> Sterilize laboratory equipment and materials</p>
+                <h5>Materials Required:</h5>
+                <ul>
+                    <li>Autoclave</li>
+                    <li>Autoclave bags</li>
+                    <li>Sterilization indicators</li>
+                    <li>Heat-resistant gloves</li>
+                </ul>
+                <h5>Procedure:</h5>
+                <ol>
+                    <li>Load items into autoclave bags</li>
+                    <li>Place sterilization indicators</li>
+                    <li>Load autoclave chamber</li>
+                    <li>Select appropriate cycle (121°C, 15 psi, 15-60 min)</li>
+                    <li>Start sterilization cycle</li>
+                    <li>Allow cool-down period</li>
+                    <li>Verify sterilization indicators</li>
+                </ol>
+                
+                {% else %}
+                <h4>{{ procedure_name.replace('_', ' ').title() }}</h4>
+                <p><strong>Objective:</strong> Standard laboratory procedure</p>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    This procedure is currently being developed. Please check back later for detailed instructions.
+                </div>
+                <h5>General Steps:</h5>
+                <ol>
+                    <li>Prepare workspace and materials</li>
+                    <li>Follow safety protocols</li>
+                    <li>Execute procedure systematically</li>
+                    <li>Document results</li>
+                    <li>Clean up workspace</li>
+                </ol>
+                {% endif %}
+                
+                <div class="alert alert-warning mt-4">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Safety Warning:</strong> Always follow proper laboratory safety protocols and wear appropriate PPE when performing these procedures.
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('lab_procedures') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Lab Procedures
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

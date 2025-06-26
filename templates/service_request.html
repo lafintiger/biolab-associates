@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+
+{% block title %}Request Laboratory Service - BioLab Associates{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('lab_procedures') }}">Laboratory Services</a></li>
+        <li class="breadcrumb-item active">Service Request</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-flask me-2"></i>Request Laboratory Service</h3>
+                <p class="mb-0 text-muted">
+                    {% if service_type == 'cell_culture' %}Cell Culture Services
+                    {% elif service_type == 'dna_pcr' %}DNA Extraction & PCR Services
+                    {% elif service_type == 'microbiology' %}Microbiology Services
+                    {% elif service_type == 'sterilization' %}Sterilization Services
+                    {% elif service_type == 'analytical' %}Analytical Services
+                    {% elif service_type == 'bsl_specialized' %}BSL-3/4 Specialized Services
+                    {% else %}Laboratory Service
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('submit_service_request') }}" method="POST">
+                    <input type="hidden" name="service_type" value="{{ service_type }}">
+                    
+                    <!-- Common Fields -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="contact_name" class="form-label">Contact Name *</label>
+                            <input type="text" class="form-control" id="contact_name" name="contact_name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="contact_email" class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="contact_email" name="contact_email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="organization" class="form-label">Organization/Institution *</label>
+                            <input type="text" class="form-control" id="organization" name="organization" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="project_description" class="form-label">Project Description *</label>
+                        <textarea class="form-control" id="project_description" name="project_description" rows="3" required 
+                                  placeholder="Briefly describe your project and objectives"></textarea>
+                    </div>
+                    
+                    <!-- Service-Specific Fields -->
+                    {% if service_type == 'cell_culture' %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>Cell Culture Service Details
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="cell_type" class="form-label">Cell Type/Line *</label>
+                            <input type="text" class="form-control" id="cell_type" name="cell_type" required
+                                   placeholder="e.g., HEK293, CHO, Primary neurons">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="culture_volume" class="form-label">Culture Volume *</label>
+                            <select class="form-select" id="culture_volume" name="culture_volume" required>
+                                <option value="">Select volume...</option>
+                                <option value="25cm2_flask">25 cm² Flask</option>
+                                <option value="75cm2_flask">75 cm² Flask</option>
+                                <option value="175cm2_flask">175 cm² Flask</option>
+                                <option value="multi_well_plates">Multi-well Plates</option>
+                                <option value="bioreactor">Bioreactor (>1L)</option>
+                                <option value="custom">Custom Volume</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="culture_duration" class="form-label">Culture Duration *</label>
+                            <select class="form-select" id="culture_duration" name="culture_duration" required>
+                                <option value="">Select duration...</option>
+                                <option value="1-3_days">1-3 days</option>
+                                <option value="1_week">1 week</option>
+                                <option value="2_weeks">2 weeks</option>
+                                <option value="1_month">1 month</option>
+                                <option value="ongoing">Ongoing maintenance</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="special_conditions" class="form-label">Special Conditions</label>
+                            <input type="text" class="form-control" id="special_conditions" name="special_conditions"
+                                   placeholder="e.g., CO2 levels, temperature, supplements">
+                        </div>
+                    </div>
+                    
+                    {% elif service_type == 'dna_pcr' %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>DNA Extraction & PCR Service Details
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sample_type" class="form-label">Sample Type *</label>
+                            <select class="form-select" id="sample_type" name="sample_type" required>
+                                <option value="">Select sample type...</option>
+                                <option value="tissue">Tissue samples</option>
+                                <option value="blood">Blood samples</option>
+                                <option value="cell_culture">Cell culture</option>
+                                <option value="bacterial_culture">Bacterial culture</option>
+                                <option value="plant_material">Plant material</option>
+                                <option value="environmental">Environmental samples</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sample_quantity" class="form-label">Number of Samples *</label>
+                            <input type="number" class="form-control" id="sample_quantity" name="sample_quantity" min="1" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="target_sequence" class="form-label">Target Sequence/Gene</label>
+                            <input type="text" class="form-control" id="target_sequence" name="target_sequence"
+                                   placeholder="Gene name or sequence details">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="analysis_type" class="form-label">Analysis Type *</label>
+                            <select class="form-select" id="analysis_type" name="analysis_type" required>
+                                <option value="">Select analysis...</option>
+                                <option value="standard_pcr">Standard PCR</option>
+                                <option value="qpcr">Real-time qPCR</option>
+                                <option value="sequencing_prep">Sequencing preparation</option>
+                                <option value="genotyping">Genotyping</option>
+                                <option value="expression_analysis">Expression analysis</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    {% elif service_type == 'microbiology' %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>Microbiology Service Details
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="organism_type" class="form-label">Organism Type *</label>
+                            <select class="form-select" id="organism_type" name="organism_type" required>
+                                <option value="">Select organism...</option>
+                                <option value="bacteria">Bacteria</option>
+                                <option value="yeast">Yeast</option>
+                                <option value="fungi">Fungi</option>
+                                <option value="mixed_culture">Mixed culture</option>
+                                <option value="unknown">Unknown/Identification needed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="service_needed" class="form-label">Service Needed *</label>
+                            <select class="form-select" id="service_needed" name="service_needed" required>
+                                <option value="">Select service...</option>
+                                <option value="isolation">Isolation & purification</option>
+                                <option value="identification">Identification</option>
+                                <option value="antimicrobial_testing">Antimicrobial testing</option>
+                                <option value="culture_maintenance">Culture maintenance</option>
+                                <option value="environmental_monitoring">Environmental monitoring</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="growth_conditions" class="form-label">Preferred Growth Conditions</label>
+                        <textarea class="form-control" id="growth_conditions" name="growth_conditions" rows="2"
+                                  placeholder="Temperature, atmosphere, media preferences, etc."></textarea>
+                    </div>
+                    
+                    {% elif service_type == 'sterilization' %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>Sterilization Service Details
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sterilization_method" class="form-label">Preferred Method *</label>
+                            <select class="form-select" id="sterilization_method" name="sterilization_method" required>
+                                <option value="">Select method...</option>
+                                <option value="autoclave">Autoclave (steam)</option>
+                                <option value="dry_heat">Dry heat</option>
+                                <option value="chemical">Chemical sterilization</option>
+                                <option value="gamma_radiation">Gamma radiation</option>
+                                <option value="ethylene_oxide">Ethylene oxide</option>
+                                <option value="consultation">Need consultation</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="item_quantity" class="form-label">Quantity of Items *</label>
+                            <input type="number" class="form-control" id="item_quantity" name="item_quantity" min="1" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="items_description" class="form-label">Items to Sterilize *</label>
+                        <textarea class="form-control" id="items_description" name="items_description" rows="3" required
+                                  placeholder="Describe the items, materials, size, and any special considerations"></textarea>
+                    </div>
+                    
+                    {% elif service_type == 'analytical' %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>Analytical Service Details
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="analytical_method" class="form-label">Analysis Method *</label>
+                            <select class="form-select" id="analytical_method" name="analytical_method" required>
+                                <option value="">Select method...</option>
+                                <option value="uv_vis_spectrophotometry">UV-Vis Spectrophotometry</option>
+                                <option value="fluorescence">Fluorescence spectroscopy</option>
+                                <option value="microscopy">Microscopy</option>
+                                <option value="particle_analysis">Particle size analysis</option>
+                                <option value="concentration_analysis">Concentration analysis</option>
+                                <option value="purity_assessment">Purity assessment</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sample_count" class="form-label">Number of Samples *</label>
+                            <input type="number" class="form-control" id="sample_count" name="sample_count" min="1" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="analytical_requirements" class="form-label">Analytical Requirements *</label>
+                        <textarea class="form-control" id="analytical_requirements" name="analytical_requirements" rows="3" required
+                                  placeholder="Describe what you need to measure, detect, or characterize"></textarea>
+                    </div>
+                    
+                    {% elif service_type == 'bsl_specialized' %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-shield-alt me-2"></i>BSL-3/4 Specialized Service Details - Security Clearance Required
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="clearance_level" class="form-label">Clearance Level *</label>
+                            <select class="form-select" id="clearance_level" name="clearance_level" required>
+                                <option value="">Select clearance...</option>
+                                <option value="bsl3">BSL-3 Certified</option>
+                                <option value="bsl4">BSL-4 Authorized</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="facility_id" class="form-label">Facility ID *</label>
+                            <input type="text" class="form-control" id="facility_id" name="facility_id" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="pathogen_category" class="form-label">Pathogen Category *</label>
+                            <select class="form-select" id="pathogen_category" name="pathogen_category" required>
+                                <option value="">Select category...</option>
+                                <option value="select_agents">Select agents</option>
+                                <option value="toxins">Toxins</option>
+                                <option value="recombinant_organisms">Recombinant organisms</option>
+                                <option value="prions">Prions</option>
+                                <option value="classified">Classified materials</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="containment_level" class="form-label">Required Containment *</label>
+                            <select class="form-select" id="containment_level" name="containment_level" required>
+                                <option value="">Select level...</option>
+                                <option value="bsl3">BSL-3</option>
+                                <option value="bsl4">BSL-4</option>
+                                <option value="absl3">ABSL-3</option>
+                                <option value="absl4">ABSL-4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="specialized_requirements" class="form-label">Specialized Requirements *</label>
+                        <textarea class="form-control" id="specialized_requirements" name="specialized_requirements" rows="4" required
+                                  placeholder="Describe specific protocols, safety measures, or handling requirements"></textarea>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Common Fields (continued) -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="timeline" class="form-label">Required Timeline *</label>
+                            <select class="form-select" id="timeline" name="timeline" required>
+                                <option value="">Select timeline...</option>
+                                <option value="rush_24h">Rush (24 hours)</option>
+                                <option value="priority_48h">Priority (48 hours)</option>
+                                <option value="standard_1week">Standard (1 week)</option>
+                                <option value="flexible_2weeks">Flexible (2 weeks)</option>
+                                <option value="long_term">Long-term project</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="budget_range" class="form-label">Budget Range *</label>
+                            <select class="form-select" id="budget_range" name="budget_range" required>
+                                <option value="">Select range...</option>
+                                <option value="under_500">Under $500</option>
+                                <option value="500_1500">$500 - $1,500</option>
+                                <option value="1500_5000">$1,500 - $5,000</option>
+                                <option value="5000_15000">$5,000 - $15,000</option>
+                                <option value="15000_plus">$15,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="additional_notes" class="form-label">Additional Notes</label>
+                        <textarea class="form-control" id="additional_notes" name="additional_notes" rows="3"
+                                  placeholder="Any additional requirements, special instructions, or questions"></textarea>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms_agreement" name="terms_agreement" required>
+                        <label class="form-check-label" for="terms_agreement">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Laboratory Safety Guidelines</a> *
+                        </label>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('lab_procedures') }}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Services
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Service Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

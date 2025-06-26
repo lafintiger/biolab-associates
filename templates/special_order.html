@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Special Order Request - BioLab Associates{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-clipboard-list me-2"></i>Special Order Request
+                </h4>
+                <p class="text-muted mb-0 mt-2">Don't see what you're looking for? Provide detailed information and we'll special order it for you.</p>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('submit_special_order') }}" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="equipment_type" class="form-label">
+                                <i class="fas fa-cogs me-1"></i>Equipment Type *
+                            </label>
+                            <select class="form-select" id="equipment_type" name="equipment_type" required>
+                                <option value="">Select category...</option>
+                                <option value="Biosafety Cabinets">Biosafety Cabinets</option>
+                                <option value="Incubators">Incubators & Shakers</option>
+                                <option value="Autoclaves">Autoclaves & Sterilizers</option>
+                                <option value="DNA Extractors">DNA Extractors & Liquid Handlers</option>
+                                <option value="PCR Systems">PCR Systems & Thermal Cyclers</option>
+                                <option value="Microscopes">Microscopes & Imaging</option>
+                                <option value="Centrifuges">Centrifuges</option>
+                                <option value="Spectrophotometers">Spectrophotometers</option>
+                                <option value="Gel Electrophoresis">Gel Electrophoresis</option>
+                                <option value="Cell Culture">Cell Culture Equipment</option>
+                                <option value="Laboratory Furniture">Laboratory Furniture</option>
+                                <option value="Safety Equipment">Safety & PPE</option>
+                                <option value="Other">Other Laboratory Equipment</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="manufacturer" class="form-label">
+                                <i class="fas fa-industry me-1"></i>Preferred Manufacturer
+                            </label>
+                            <input type="text" class="form-control" id="manufacturer" name="manufacturer" 
+                                   placeholder="e.g., Thermo Fisher, Bio-Rad, Eppendorf">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="model" class="form-label">
+                                <i class="fas fa-tag me-1"></i>Model Number/Name
+                            </label>
+                            <input type="text" class="form-control" id="model" name="model" 
+                                   placeholder="Specific model if known">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="budget_range" class="form-label">
+                                <i class="fas fa-dollar-sign me-1"></i>Budget Range *
+                            </label>
+                            <select class="form-select" id="budget_range" name="budget_range" required>
+                                <option value="">Select budget range...</option>
+                                <option value="Under $5,000">Under $5,000</option>
+                                <option value="$5,000 - $15,000">$5,000 - $15,000</option>
+                                <option value="$15,000 - $30,000">$15,000 - $30,000</option>
+                                <option value="$30,000 - $50,000">$30,000 - $50,000</option>
+                                <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                                <option value="Over $100,000">Over $100,000</option>
+                                <option value="Flexible">Budget Flexible</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="specifications" class="form-label">
+                            <i class="fas fa-list-ul me-1"></i>Required Specifications *
+                        </label>
+                        <textarea class="form-control" id="specifications" name="specifications" rows="4" 
+                                  placeholder="Please provide detailed specifications, features, and requirements..." required></textarea>
+                        <div class="form-text">Include technical specifications, capacity, features, and any special requirements.</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="timeline" class="form-label">
+                                <i class="fas fa-calendar-alt me-1"></i>Required Timeline *
+                            </label>
+                            <select class="form-select" id="timeline" name="timeline" required>
+                                <option value="">Select timeline...</option>
+                                <option value="ASAP (Rush Order)">ASAP (Rush Order)</option>
+                                <option value="Within 2 weeks">Within 2 weeks</option>
+                                <option value="Within 1 month">Within 1 month</option>
+                                <option value="Within 2-3 months">Within 2-3 months</option>
+                                <option value="Flexible timeline">Flexible timeline</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="contact_method" class="form-label">
+                                <i class="fas fa-phone me-1"></i>Preferred Contact Method *
+                            </label>
+                            <select class="form-select" id="contact_method" name="contact_method" required>
+                                <option value="">Select contact method...</option>
+                                <option value="Email">Email</option>
+                                <option value="Phone">Phone Call</option>
+                                <option value="Both">Email and Phone</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="additional_info" class="form-label">
+                            <i class="fas fa-info-circle me-1"></i>Additional Information
+                        </label>
+                        <textarea class="form-control" id="additional_info" name="additional_info" rows="3" 
+                                  placeholder="Any additional information, special installation requirements, warranty needs, etc."></textarea>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>What happens next?</strong><br>
+                        Our equipment specialists will review your request and contact you within 1-2 business days with:
+                        <ul class="mb-0 mt-2">
+                            <li>Product availability and pricing</li>
+                            <li>Lead times and delivery options</li>
+                            <li>Alternative recommendations if needed</li>
+                            <li>Installation and training options</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Special Order Request
+                        </button>
+                        <a href="{{ url_for('catalog') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Catalog
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

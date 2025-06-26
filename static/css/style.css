@@ -1,0 +1,211 @@
+/* Custom styles for BioLab Associates */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 15px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    border-radius: 10px 10px 0 0;
+}
+
+.btn {
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+    border: none;
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, #dc3545, #c82333);
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(45deg, #ffc107, #e0a800);
+    border: none;
+    color: #212529;
+}
+
+.btn-info {
+    background: linear-gradient(45deg, #17a2b8, #117a8b);
+    border: none;
+}
+
+.badge {
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.breadcrumb {
+    background-color: #e9ecef;
+    border-radius: 25px;
+    padding: 10px 20px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    font-weight: bold;
+}
+
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.footer {
+    margin-top: 50px;
+}
+
+/* Product cards */
+.product-card {
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.02);
+}
+
+/* Cart styles */
+.cart-item {
+    border-left: 4px solid #007bff;
+}
+
+/* Login page */
+.login-card {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Procedure cards */
+.procedure-card {
+    border-left: 4px solid #28a745;
+}
+
+/* Activity indicators */
+.activity-indicator {
+    position: relative;
+}
+
+.activity-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    background-color: #28a745;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2rem 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .btn {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Loading animations */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success animations */
+.success-animation {
+    animation: pulse 1s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+} 

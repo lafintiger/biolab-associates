@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - BioLab Associates{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('catalog') }}">Catalog</a></li>
+        <li class="breadcrumb-item active">{{ product.name }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                <i class="fas fa-microscope fa-5x text-muted"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h1>{{ product.name }}</h1>
+        <p class="lead">{{ product.description }}</p>
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Specifications</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">{{ product.specifications }}</p>
+            </div>
+        </div>
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-tag me-2"></i>Category</h5>
+            </div>
+            <div class="card-body">
+                <span class="badge bg-primary">{{ product.category }}</span>
+                {% if product.get('bsl_level') %}
+                <span class="badge bg-warning ms-2">BSL-{{ product.bsl_level }}</span>
+                {% endif %}
+                {% if product.get('requires_clearance') %}
+                <span class="badge bg-danger ms-2">Authorization Required</span>
+                {% endif %}
+            </div>
+        </div>
+
+                 {% if product.category == 'Biological Specimens' %}
+         <div class="card border-danger mb-3">
+             <div class="card-header bg-danger text-white">
+                 <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>CONTROLLED BIOLOGICAL MATERIAL</h5>
+             </div>
+         {% elif product.category == 'Detoxicants & Antidotes' %}
+         <div class="card border-warning mb-3">
+             <div class="card-header bg-warning text-dark">
+                 <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i>CONTROLLED THERAPEUTIC AGENT</h5>
+             </div>
+                         <div class="card-body">
+                 {% if product.category == 'Biological Specimens' %}
+                 <div class="alert alert-warning mb-3">
+                     <strong><i class="fas fa-shield-alt me-2"></i>SECURITY NOTICE:</strong> 
+                     This biological specimen is subject to strict regulatory controls and requires proper authorization for purchase and handling.
+                 </div>
+                 {% elif product.category == 'Detoxicants & Antidotes' %}
+                 <div class="alert alert-info mb-3">
+                     <strong><i class="fas fa-medical me-2"></i>MEDICAL NOTICE:</strong> 
+                     This detoxicant/antidote is intended for emergency medical treatment and research purposes only. Requires proper medical licensing and training for handling.
+                 </div>
+                 {% endif %}
+                
+                {% if product.get('documentation_required') %}
+                <h6><i class="fas fa-clipboard-check me-2"></i>Required Documentation:</h6>
+                <ul class="list-unstyled mb-3">
+                    {% for doc in product.documentation_required %}
+                    <li><i class="fas fa-check-circle text-success me-2"></i>
+                        {% if doc == 'bsl3_facility_license' %}BSL-3 Facility Operating License
+                        {% elif doc == 'bsl4_facility_certification' %}BSL-4 Facility Certification
+                        {% elif doc == 'cdc_registration' %}CDC Registration Certificate
+                        {% elif doc == 'select_agent_permit' %}Select Agent Research Permit
+                        {% elif doc == 'irb_approval' %}Institutional Review Board Approval
+                        {% elif doc == 'security_clearance' %}Personnel Security Clearance
+                        {% elif doc == 'dea_registration' %}DEA Registration for Controlled Substances
+                        {% elif doc == 'toxin_research_permit' %}Toxin Research Permit
+                        {% elif doc == 'facility_license' %}Facility Operating License
+                        {% elif doc == 'who_approval' %}WHO Research Authorization
+                        {% elif doc == 'international_permit' %}International Research Permit
+                        {% elif doc == 'maximum_security_clearance' %}Maximum Security Clearance
+                        {% elif doc == 'personnel_training_cert' %}Personnel Training Certificate
+                        {% elif doc == 'select_agent_registration' %}Select Agent Registration
+                        {% elif doc == 'personnel_security_check' %}Personnel Security Background Check
+                        {% elif doc == 'researcher_training_cert' %}Researcher Training Certification
+                        {% elif doc == 'safety_protocol_approval' %}Safety Protocol Approval
+                        {% elif doc == 'veterinary_research_permit' %}Veterinary Research Permit
+                        {% elif doc == 'biosafety_approval' %}Biosafety Committee Approval
+                        {% elif doc == 'bsl3_certification' %}BSL-3 Facility Certification
+                        {% elif doc == 'defense_research_clearance' %}Defense Research Security Clearance
+                        {% elif doc == 'facility_inspection_cert' %}Facility Inspection Certificate
+                        {% elif doc == 'security_plan' %}Facility Security Plan
+                                                 {% elif doc == 'toxin_research_license' %}Toxin Research License
+                         {% elif doc == 'antidote_research_permit' %}Antidote Research Permit
+                         {% elif doc == 'clinical_research_license' %}Clinical Research License
+                         {% elif doc == 'gmp_facility_cert' %}GMP Facility Certification
+                         {% elif doc == 'emergency_response_license' %}Emergency Response License
+                         {% elif doc == 'veterinary_antitoxin_permit' %}Veterinary Antitoxin Permit
+                         {% elif doc == 'cold_storage_cert' %}Cold Storage Certification
+                         {% elif doc == 'medical_facility_license' %}Medical Facility License
+                         {% elif doc == 'blood_product_license' %}Blood Product Handling License
+                         {% elif doc == 'clinical_research_permit' %}Clinical Research Permit
+                         {% elif doc == 'fda_investigational_approval' %}FDA Investigational Drug Approval
+                         {% elif doc == 'pathogen_immunity_cert' %}Pathogen Immunity Research Certificate
+                         {% elif doc == 'emergency_response_cert' %}Emergency Response Certification
+                         {% elif doc == 'toxicology_training_cert' %}Toxicology Training Certificate
+                         {% elif doc == 'emergency_medical_license' %}Emergency Medical License
+                         {% elif doc == 'poison_control_cert' %}Poison Control Certification
+                         {% elif doc == 'antidote_storage_permit' %}Antidote Storage Permit
+                         {% elif doc == 'pharmaceutical_handling_cert' %}Pharmaceutical Handling Certificate
+                         {% elif doc == 'chemical_warfare_research_permit' %}Chemical Warfare Research Permit
+                         {% elif doc == 'defense_contractor_license' %}Defense Contractor License
+                         {% elif doc == 'nerve_agent_training_cert' %}Nerve Agent Training Certificate
+                         {% elif doc == 'secure_storage_permit' %}Secure Storage Permit
+                         {% elif doc == 'radiological_emergency_license' %}Radiological Emergency License
+                         {% elif doc == 'nuclear_medicine_permit' %}Nuclear Medicine Permit
+                         {% elif doc == 'radiation_safety_cert' %}Radiation Safety Certificate
+                         {% elif doc == 'broad_spectrum_permit' %}Broad-Spectrum Toxin Research Permit
+                         {% elif doc == 'multi_toxin_clearance' %}Multi-Toxin Research Clearance
+                         {% elif doc == 'clinical_trial_license' %}Clinical Trial Research License
+                         {% elif doc == 'humanized_therapy_permit' %}Humanized Therapy Research Permit
+                         {% elif doc == 'advanced_therapeutic_cert' %}Advanced Therapeutic Research Certificate
+                         {% else %}{{ doc.replace('_', ' ').title() }}
+                         {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                                 <div class="row">
+                     {% if product.category == 'Biological Specimens' %}
+                     <div class="col-md-6">
+                         <h6><i class="fas fa-building me-2"></i>Facility Requirements:</h6>
+                         <ul class="list-unstyled">
+                             {% if product.bsl_level >= 3 %}
+                             <li><i class="fas fa-shield-alt text-warning me-2"></i>BSL-{{ product.bsl_level }} containment facility</li>
+                             <li><i class="fas fa-air-freshener text-info me-2"></i>Negative pressure systems</li>
+                             <li><i class="fas fa-user-shield text-primary me-2"></i>Trained personnel only</li>
+                             {% endif %}
+                             {% if product.bsl_level >= 4 %}
+                             <li><i class="fas fa-lock text-danger me-2"></i>Maximum security protocols</li>
+                             {% endif %}
+                         </ul>
+                     </div>
+                     <div class="col-md-6">
+                         <h6><i class="fas fa-truck me-2"></i>Shipping & Handling:</h6>
+                         <ul class="list-unstyled">
+                             <li><i class="fas fa-snowflake text-info me-2"></i>Cold chain transport</li>
+                             <li><i class="fas fa-box text-secondary me-2"></i>Specialized packaging</li>
+                             <li><i class="fas fa-file-signature text-primary me-2"></i>Chain of custody documentation</li>
+                             <li><i class="fas fa-clock text-warning me-2"></i>Extended processing time (7-14 days)</li>
+                         </ul>
+                     </div>
+                     {% elif product.category == 'Detoxicants & Antidotes' %}
+                     <div class="col-md-6">
+                         <h6><i class="fas fa-hospital me-2"></i>Medical Facility Requirements:</h6>
+                         <ul class="list-unstyled">
+                             <li><i class="fas fa-user-md text-primary me-2"></i>Licensed medical personnel</li>
+                             <li><i class="fas fa-thermometer-half text-info me-2"></i>Temperature-controlled storage</li>
+                             <li><i class="fas fa-shield-alt text-warning me-2"></i>Emergency protocols required</li>
+                             {% if product.bsl_level >= 3 %}
+                             <li><i class="fas fa-lock text-danger me-2"></i>Secure storage facility</li>
+                             {% endif %}
+                         </ul>
+                     </div>
+                     <div class="col-md-6">
+                         <h6><i class="fas fa-truck-medical me-2"></i>Medical Transport:</h6>
+                         <ul class="list-unstyled">
+                             <li><i class="fas fa-snowflake text-info me-2"></i>Cold chain maintained</li>
+                             <li><i class="fas fa-box-open text-secondary me-2"></i>Medical-grade packaging</li>
+                             <li><i class="fas fa-clipboard-check text-primary me-2"></i>Pharmacovigilance tracking</li>
+                             <li><i class="fas fa-clock text-warning me-2"></i>Expedited processing (3-7 days)</li>
+                         </ul>
+                     </div>
+                     {% endif %}
+                 </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-primary mb-0">${{ "%.2f"|format(product.price) }}</h2>
+            <span class="badge bg-success">In Stock</span>
+        </div>
+        
+        {% if product.get('access_restricted') %}
+        <div class="alert alert-danger">
+            <h6><i class="fas fa-lock me-2"></i>Access Restricted</h6>
+            <p class="mb-2">{{ product.restriction_reason }}</p>
+            <small class="text-muted">Contact your facility administrator to request access authorization.</small>
+        </div>
+        <button class="btn btn-secondary btn-lg w-100" disabled>
+            <i class="fas fa-lock me-2"></i>Authorization Required
+        </button>
+        {% else %}
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <div class="row">
+                <div class="col-4">
+                    <label for="quantity" class="form-label">Quantity:</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="{% if product.category == 'Biological Specimens' %}3{% else %}10{% endif %}">
+                </div>
+                <div class="col-8 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+        
+        <div class="mt-3">
+            <a href="{{ url_for('catalog') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Catalog
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Product Information</h5>
+            </div>
+            <div class="card-body">
+                {% if product.category == 'Biological Specimens' %}
+                <p><strong><i class="fas fa-exclamation-circle text-danger me-2"></i>IMPORTANT:</strong> This biological specimen is for research use only and subject to strict regulatory oversight. All purchases require proper authorization and documentation verification.</p>
+                <p><strong>Processing Time:</strong> 7-14 business days for authorization verification and documentation review.</p>
+                <p><strong>Shipping:</strong> Specialized cold-chain transport with chain of custody documentation. Additional fees apply.</p>
+                <p><strong>Compliance:</strong> All orders monitored for regulatory compliance. Customer responsible for proper containment and disposal.</p>
+                <p><strong>Support:</strong> Specialized technical support for biosafety and handling protocols available.</p>
+                {% elif product.category == 'Detoxicants & Antidotes' %}
+                <p><strong><i class="fas fa-medical text-success me-2"></i>MEDICAL USE:</strong> This detoxicant/antidote is intended for emergency medical treatment and research applications. Licensed medical personnel required for handling and administration.</p>
+                <p><strong>Processing Time:</strong> 3-7 business days for medical license verification and expedited processing.</p>
+                <p><strong>Shipping:</strong> Temperature-controlled medical transport with pharmacovigilance tracking. Expedited delivery available.</p>
+                <p><strong>Storage:</strong> Requires appropriate temperature-controlled storage and emergency protocols. Expiration monitoring required.</p>
+                <p><strong>Support:</strong> Medical consultation and emergency response protocols available 24/7.</p>
+                {% else %}
+                <p>This equipment is suitable for laboratory research and biological applications. All products come with manufacturer warranty and technical support.</p>
+                <p><strong>Shipping:</strong> Free shipping on orders over $1,000. Standard delivery 5-7 business days.</p>
+                <p><strong>Support:</strong> 24/7 technical support and installation services available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ORD00001",
+    "username": "admin",
+    "timestamp": "2025-06-26T03:33:01.382368",
+    "order_items": [
+      {
+        "product_id": "bio003",
+        "product_name": "Abrus precatorius Seeds (Rosary Pea) - Research Sample",
+        "quantity": 1,
+        "price": 1750.0,
+        "item_total": 1750.0
+      }
+    ],
+    "total": 1750.0,
+    "status": "completed"
+  }
+]

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Special Order Confirmation - BioLab Associates{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="alert alert-success text-center">
+            <i class="fas fa-check-circle fa-3x mb-3"></i>
+            <h2>Special Order Request Submitted!</h2>
+            <p class="mb-0">Thank you for your special order request. Our equipment specialists will review your requirements and contact you soon.</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Request Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Request ID:</strong> {{ request.id }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Submitted:</strong> {{ request.timestamp[:10] }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Customer:</strong> {{ request.username }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Status:</strong> <span class="badge bg-warning">{{ request.status.replace('_', ' ').title() }}</span>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Equipment Type:</strong><br>
+                        <span class="text-muted">{{ request.equipment_type }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Budget Range:</strong><br>
+                        <span class="text-muted">{{ request.budget_range }}</span>
+                    </div>
+                </div>
+                
+                {% if request.manufacturer %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Preferred Manufacturer:</strong><br>
+                        <span class="text-muted">{{ request.manufacturer }}</span>
+                    </div>
+                    {% if request.model %}
+                    <div class="col-md-6">
+                        <strong>Model:</strong><br>
+                        <span class="text-muted">{{ request.model }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="mb-3">
+                    <strong>Required Specifications:</strong><br>
+                    <div class="bg-light p-3 rounded mt-1">
+                        {{ request.specifications|replace('\n', '<br>')|safe }}
+                    </div>
+                </div>
+                
+                {% if request.additional_info %}
+                <div class="mb-3">
+                    <strong>Additional Information:</strong><br>
+                    <div class="bg-light p-3 rounded mt-1">
+                        {{ request.additional_info|replace('\n', '<br>')|safe }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Required Timeline:</strong><br>
+                        <span class="text-muted">{{ request.timeline }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Preferred Contact:</strong><br>
+                        <span class="text-muted">{{ request.contact_method }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6><i class="fas fa-clock me-2"></i>What Happens Next?</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                                    <small>1</small>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <strong>Review</strong><br>
+                                <small class="text-muted">Our specialists review your requirements (1-2 business days)</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                                    <small>2</small>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <strong>Contact</strong><br>
+                                <small class="text-muted">We'll contact you with options and pricing</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                                    <small>3</small>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <strong>Quote</strong><br>
+                                <small class="text-muted">Receive detailed quote with specifications</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">
+                                    <small>4</small>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <strong>Order</strong><br>
+                                <small class="text-muted">Place your order and arrange delivery</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('catalog') }}" class="btn btn-primary me-2">
+                <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+            </a>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                <i class="fas fa-home me-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

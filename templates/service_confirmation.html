@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Service Request Confirmation - BioLab Associates{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3><i class="fas fa-check-circle me-2"></i>Service Request Submitted Successfully</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <h5><i class="fas fa-clipboard-check me-2"></i>Request ID: {{ request_id }}</h5>
+                    <p class="mb-0">Your laboratory service request has been received and is being processed by our team.</p>
+                </div>
+                
+                <h5>Request Summary:</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Service Type:</strong>
+                        {% if service_type == 'cell_culture' %}Cell Culture Services
+                        {% elif service_type == 'dna_pcr' %}DNA Extraction & PCR Services
+                        {% elif service_type == 'microbiology' %}Microbiology Services
+                        {% elif service_type == 'sterilization' %}Sterilization Services
+                        {% elif service_type == 'analytical' %}Analytical Services
+                        {% elif service_type == 'bsl_specialized' %}BSL-3/4 Specialized Services
+                        {% else %}Laboratory Service
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Contact:</strong> {{ contact_name }}
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <strong>Organization:</strong> {{ organization }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Timeline:</strong> {{ timeline.replace('_', ' ').title() }}
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <strong>Budget Range:</strong> {{ budget_range.replace('_', ' ').title() }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Submitted:</strong> {{ submission_date }}
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>What Happens Next:</h5>
+                    <ol>
+                        <li><strong>Review (2-4 hours):</strong> Our laboratory specialists will review your request</li>
+                        <li><strong>Quote & Timeline (24-48 hours):</strong> You'll receive a detailed quote and project timeline</li>
+                        <li><strong>Approval:</strong> Once approved, we'll schedule your service</li>
+                        <li><strong>Execution:</strong> Our certified technicians will perform the requested service</li>
+                        <li><strong>Results & Documentation:</strong> Complete results and documentation will be provided</li>
+                    </ol>
+                </div>
+                
+                <div class="alert alert-info mt-4">
+                    <h6><i class="fas fa-info-circle me-2"></i>Important Information:</h6>
+                    <ul class="mb-0">
+                        <li>You will receive an email confirmation at {{ contact_email }}</li>
+                        <li>Our team will contact you within 24-48 hours to discuss details</li>
+                        <li>For urgent requests, please call our laboratory directly</li>
+                        <li>Keep your Request ID for reference in all communications</li>
+                    </ul>
+                </div>
+                
+                {% if service_type == 'bsl_specialized' %}
+                <div class="alert alert-warning">
+                    <h6><i class="fas fa-shield-alt me-2"></i>BSL-3/4 Special Notice:</h6>
+                    <p class="mb-0">Your request involves high-containment materials. Additional security verification and clearance confirmation may be required before processing begins.</p>
+                </div>
+                {% endif %}
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                    <a href="{{ url_for('lab_procedures') }}" class="btn btn-primary me-md-2">
+                        <i class="fas fa-flask me-2"></i>View Other Services
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-home me-2"></i>Return to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

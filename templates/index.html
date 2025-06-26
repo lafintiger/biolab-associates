@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+            <h1 class="display-4">Welcome to BioLab Associates</h1>
+            <p class="lead">Your premier source for laboratory equipment and biological research supplies.</p>
+            <p>Specializing in high-quality equipment for culturing, genetic engineering, sporulation, purification, and formulation.</p>
+            <a class="btn btn-light btn-lg" href="{{ url_for('catalog') }}" role="button">
+                <i class="fas fa-list me-2"></i>Browse Catalog
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Biosafety Cabinets</h5>
+                <p class="card-text">Class II biological safety cabinets with HEPA filtration for safe laboratory work.</p>
+                <a href="{{ url_for('catalog', category='biosafety_cabinets') }}" class="btn btn-primary">View Products</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-thermometer-half fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Incubators</h5>
+                <p class="card-text">Precision incubators and shakers for cell culture and bacterial growth applications.</p>
+                <a href="{{ url_for('catalog', category='incubators') }}" class="btn btn-success">View Products</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-fire fa-3x text-danger mb-3"></i>
+                <h5 class="card-title">Autoclaves</h5>
+                <p class="card-text">Steam sterilizers for decontamination of laboratory instruments and media.</p>
+                <a href="{{ url_for('catalog', category='autoclaves') }}" class="btn btn-danger">View Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BSL-3/4 Specialized Categories -->
+<div class="row mt-4">
+    <div class="col-12">
+        <hr class="my-4">
+        <h3 class="text-center mb-4">
+            <i class="fas fa-shield-alt text-warning me-2"></i>BSL-3/4 Specialized Materials
+            <span class="badge bg-warning text-dark ms-2">Authorization Required</span>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-virus me-2"></i>Biological Specimens
+                    <span class="badge bg-light text-dark ms-2">BSL-3/4</span>
+                </h5>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text">Research-grade biological specimens including Bacillus anthracis, Clostridium botulinum, rosary pea, ricin, and other controlled materials for authorized laboratory research.</p>
+                <div class="alert alert-warning py-2 mb-3">
+                    <small><i class="fas fa-exclamation-triangle me-1"></i>Requires BSL-3/4 facility authorization</small>
+                </div>
+                <a href="{{ url_for('catalog', category='biological_specimens') }}" class="btn btn-danger">
+                    <i class="fas fa-biohazard me-2"></i>View Specimens
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="fas fa-shield-alt me-2"></i>Detoxicants & Antidotes
+                    <span class="badge bg-light text-dark ms-2">Medical</span>
+                </h5>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text">Specialized neutralizing antibodies, antitoxins, and emergency medical countermeasures including mAb 10D8, anti-ricin RAC18, and broad-spectrum detoxification agents.</p>
+                <div class="alert alert-info py-2 mb-3">
+                    <small><i class="fas fa-user-md me-1"></i>Requires medical facility licensing</small>
+                </div>
+                <a href="{{ url_for('catalog', category='detoxicants') }}" class="btn btn-warning">
+                    <i class="fas fa-syringe me-2"></i>View Antidotes
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-dna fa-3x text-info mb-3"></i>
+                <h5 class="card-title">DNA Extractors</h5>
+                <p class="card-text">Automated nucleic acid purification systems for high-throughput applications.</p>
+                <a href="{{ url_for('catalog', category='dna_extractors') }}" class="btn btn-info">View Products</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-vial fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">PCR Systems</h5>
+                <p class="card-text">Thermal cyclers and real-time PCR systems for molecular biology applications.</p>
+                <a href="{{ url_for('catalog', category='pcr_systems') }}" class="btn btn-warning">View Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-flask me-2"></i>Laboratory Services</h5>
+                <p class="card-text">Request professional laboratory services from our certified technicians and specialists.</p>
+                <a href="{{ url_for('lab_procedures') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-plus-circle me-2"></i>Request Services
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
