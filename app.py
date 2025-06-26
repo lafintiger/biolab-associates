@@ -3,8 +3,6 @@ import json
 import datetime
 import os
 
-import os
-
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'biolab_test_key_2024')
 app.config['SESSION_COOKIE_SECURE'] = os.environ.get('FLASK_ENV') == 'production'
